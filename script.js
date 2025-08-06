@@ -1,26 +1,23 @@
-document.addEventListener('DOMContentLoaded', function() {
-    // Smooth scrolling for navigation links
+document.addEventListener('DOMContentLoaded', () => {
+    // Smooth scrolling for nav links
     const navLinks = document.querySelectorAll('.nav-links a');
-
-    for (const link of navLinks) {
-        link.addEventListener('click', function(e) {
+    navLinks.forEach(link => {
+        link.addEventListener('click', (e) => {
             e.preventDefault();
-            const targetId = this.getAttribute('href');
+            const targetId = e.currentTarget.getAttribute('href');
             const targetElement = document.querySelector(targetId);
-
             if (targetElement) {
                 window.scrollTo({
-                    top: targetElement.offsetTop - 70, // Adjust for sticky header
+                    top: targetElement.offsetTop - 80, // Adjust for header height
                     behavior: 'smooth'
                 });
             }
         });
-    }
+    });
 
-    // Fade-in effect for sections on scroll
-    const sections = document.querySelectorAll('section');
-
-    const observer = new IntersectionObserver((entries, observer) => {
+    // Scroll-based animations
+    const animatedElements = document.querySelectorAll('section');
+    const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
                 entry.target.style.opacity = 1;
@@ -29,14 +26,13 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     }, {
-        rootMargin: '0px',
         threshold: 0.1
     });
 
-    sections.forEach(section => {
-        section.style.opacity = 0;
-        section.style.transform = 'translateY(20px)';
-        section.style.transition = 'opacity 0.5s ease-out, transform 0.5s ease-out';
-        observer.observe(section);
+    animatedElements.forEach(el => {
+        el.style.opacity = 0;
+        el.style.transform = 'translateY(20px)';
+        el.style.transition = 'opacity 0.6s ease-out, transform 0.6s ease-out';
+        observer.observe(el);
     });
 });
